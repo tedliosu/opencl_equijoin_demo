@@ -30,6 +30,7 @@
    3. Finally (if on a Linux distro); install the following packages (or the equivalent
         packages for your distro):
         `sqlite3 libbsd-dev`
+   4. `sudo -H pip install Faker`
 
 2. Git clone this repository
 
@@ -62,6 +63,7 @@
       to contain only data about active or inactive customers (but not both).
 
 2. `./generate_custom_data.py [number of customer table rows] [number of purchases table rows]`
+   (MAKE SURE you have the Faker pip package installed for this one)
     - For example, run `./generate_custom_data.py 1000000 3000000`
 
 3. `./generate_custom_data_equijoin_result_ref.sh` (MAKE SURE you have sqlite3 installed for this one)
