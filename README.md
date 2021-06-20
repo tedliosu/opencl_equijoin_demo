@@ -77,3 +77,9 @@
     for both the customer and purchases table of 1).
  - (Maybe) Have filepath definitions all in one file for better program maintainability.
 
+# Miscellaneous
+
+ - *.empty_file* in "./data/custom_results" is just there so that git may at least include the
+   "./data/custom_results" directory in version control so that the main C program and the
+   scripts have all the directories they need to work properly.
+
