@@ -39,6 +39,13 @@ EOF
 read CORRECT_EQUIJOIN_TABLE_ACTIVE_CUSTOMERS <<- EOF
 	./data/custom_results/custom_correct_join_result_active_customers.csv
 EOF
+# Table header for both equijoin result tables; the value of this variable
+#	 is what gets written to each file storing the correct equijoin result
+#	 when sqlite3 doesn't write anything to the file because the equijoin
+#	 result is an empty table.
+read EQUIJOIN_RESULT_TABLE_HEADER <<- EOF
+	epochTimePurchased,customerID,customerName,purchaseEAN13,purchaseQuantity
+EOF
 
 ## END GLOBAL VARIABLES DEFINITION SECTION ##
 
@@ -56,7 +63,7 @@ fi
 # Notify user of next action
 printf "\nGenerating correct equijoin results using sqlite3 for main\n"
 printf "    C program to use for checking correctness of the C program's\n"
-printf "    equijoin results; this may take some time.\n\n"
+printf "    equijoin results; this may take some time.\n"
 
 # Generate correct equijoin results by joining customer data table
 #    and purchases data table on customerID column. The results
@@ -91,6 +98,23 @@ sqlite3 -batch -csv -header <<- EOF
 		ORDER BY purchases_data.epochTimePurchased;
 	.quit
 EOF
+
+# Next two if statements handle edge cases where either of the two
+#    equijoin results is an empty table. sqlite3 doesn't print anything
+#    to each file storing the equijoin result table if the corresponding
+#    equijoin result is an empty table.
+#
+# As each equijoin results file is simply an empty file if sqlite3
+#	 outputs an empty table to the file, just overwrite the file
+#	 with the actual correct equijoin result for these edge cases.
+if [[ $(stat --printf="%s" "$CORRECT_EQUIJOIN_TABLE_ACTIVE_CUSTOMERS") -eq 0 ]]; then
+		printf "%s\n" "$EQUIJOIN_RESULT_TABLE_HEADER" > "$CORRECT_EQUIJOIN_TABLE_ACTIVE_CUSTOMERS"
+fi
+if [[ $(stat --printf="%s" "$CORRECT_EQUIJOIN_TABLE_INACTIVE_CUSTOMERS") -eq 0 ]]; then
+		printf "%s\n" "$EQUIJOIN_RESULT_TABLE_HEADER" > "$CORRECT_EQUIJOIN_TABLE_INACTIVE_CUSTOMERS"
+fi
+
+printf "\n"
 
 exit "$EXIT_SUCCESS"
 

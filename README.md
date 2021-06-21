@@ -55,7 +55,7 @@
    However, **if you have only 1 OpenCL platform installed on your machine, you MUST set
    DESIRED_PLATFORM_INDEX to 0**.
 
-## Instructions To Run Main C Program Using Custom Input Data Tables And Custom Correct Result Table ##
+## Instructions To Run Main C Program Using Custom Input Data Tables ##
 
 1. Change macro value of EXAMPLE_OR_CUSTOM_FILES to "0" in "./include/table_utilities.h"
     - Also set IS_CUSTOMER_ACTIVE to either "CUSTOMER_ACTIVE_FLAG" or "CUSTOMER_INACTIVE_FLAG" in
