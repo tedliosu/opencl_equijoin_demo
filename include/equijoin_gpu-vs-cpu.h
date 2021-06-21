@@ -45,6 +45,13 @@
                                    " table with %ld row(s) and purchases table with"\
                                    " %ld row(s) in main memory took %lf seconds\n\n"
 
+/*
+ * Message informing user which table is being checked for correctness and which table
+ * is being used as the reference for the correct result
+ */
+#define CHECK_RESULTS_MESSAGE ">>> Table stored at '%s' currently being verified\n"\
+                                                "    using table stored at '%s'.\n"
+
 #endif // EQUIJOIN_GPU_VS_CPU_H
 // =================================================================================================
 

@@ -183,7 +183,7 @@ void print_joined_results_table(struct Joined_Results_Table* joined_results_tabl
 /*
  * Message informing user that two tables on disk are equal to each other
  */
-#define ASSERTION_PASSED_INFORM_USER "Congratulations, both of your tables are identical in content!\n"
+#define ASSERTION_PASSED_INFORM_USER "Congratulations, both of your tables are identical in content!\n\n"
 /*
  * Assert equality between two equijoin results tables on disk,
  *   where each table is represented by a CSV file on disk.

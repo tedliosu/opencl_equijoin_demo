@@ -12,7 +12,7 @@
 /*
  * Message notifying user start of serial hash join probing
  */
-#define NOTIFY_USER_SERIAL_HASH_JOIN_OP "Performing serial hash equijoin probing in main memory\n"
+#define NOTIFY_USER_SERIAL_HASH_JOIN_OP ">>> Performing serial hash equijoin probing in main memory\n"
 
 /*
  * Serial implementation of hash equijoin probing in C.

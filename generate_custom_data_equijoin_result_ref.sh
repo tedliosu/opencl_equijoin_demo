@@ -65,6 +65,9 @@ printf "\nGenerating correct equijoin results using sqlite3 for main\n"
 printf "    C program to use for checking correctness of the C program's\n"
 printf "    equijoin results; this may take some time.\n"
 
+printf "\nImporting '%s' as \"customer_data\" table and \n" "$CUSTOMER_TABLE_FILE"
+printf "    importing '%s' as \"purchases_data\" table...\n" "$PURCHASES_TABLE_FILE"
+
 # Generate correct equijoin results by joining customer data table
 #    and purchases data table on customerID column. The results
 #    consists of two separate csv files where the first file is a
@@ -114,7 +117,11 @@ if [[ $(stat --printf="%s" "$CORRECT_EQUIJOIN_TABLE_INACTIVE_CUSTOMERS") -eq 0 ]
 		printf "%s\n" "$EQUIJOIN_RESULT_TABLE_HEADER" > "$CORRECT_EQUIJOIN_TABLE_INACTIVE_CUSTOMERS"
 fi
 
-printf "\n"
+# Notify user where correct equijoin results have been written to
+printf "\nCorrect equijoin result table for ACTIVE CUSTOMERS ONLY\n"
+printf "    has been written to '%s'.\n" "$CORRECT_EQUIJOIN_TABLE_ACTIVE_CUSTOMERS"
+printf "\nCorrect equijoin result table for INACTIVE CUSTOMERS ONLY\n"
+printf "    has been written to '%s'.\n\n" "$CORRECT_EQUIJOIN_TABLE_INACTIVE_CUSTOMERS"
 
 exit "$EXIT_SUCCESS"
 

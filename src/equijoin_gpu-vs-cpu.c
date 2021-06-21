@@ -240,7 +240,9 @@ int main(int argc, char* argv[]) {
     write_results_table_to_csv_file(tables_list.results_table, SERIAL_RESULTS_TABLE_FILE_PATH);
 
     // Check output result of each equijoin against known correct result.
+    printf(CHECK_RESULTS_MESSAGE, PARALLEL_RESULTS_TABLE_FILE_PATH, RESULTS_REF_TABLE_FILE_PATH);
     assert_equijoin_results_tables_equality(PARALLEL_RESULTS_TABLE_FILE_PATH, RESULTS_REF_TABLE_FILE_PATH);
+    printf(CHECK_RESULTS_MESSAGE, SERIAL_RESULTS_TABLE_FILE_PATH, RESULTS_REF_TABLE_FILE_PATH);
     assert_equijoin_results_tables_equality(SERIAL_RESULTS_TABLE_FILE_PATH, RESULTS_REF_TABLE_FILE_PATH);
 
     // Empty main memory of all data stored

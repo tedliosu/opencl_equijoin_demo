@@ -56,7 +56,7 @@
  * Message notifying user of start of hash join probing on OpenCL device
  * and informing user size of workgroups used to perform the join.
  */
-#define NOTIFY_USER_HASH_JOIN_OP "Performing parallelized hash equijoin "\
+#define NOTIFY_USER_HASH_JOIN_OP ">>> Performing parallelized hash equijoin "\
                                    "probing on OpenCL device with %d work-items per workgroup\n"
 
 /* 

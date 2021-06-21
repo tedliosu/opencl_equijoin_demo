@@ -111,7 +111,7 @@ def main():
         Faker.seed(time.time_ns())
         print(f"\nGenerating customer table with {num_customer_table_rows} random records\n"
                 f"    and purchases table with {num_purchases_table_rows} random records; this may\n"
-                f"    take some time\n")
+                f"    take some time")
         # Generate customer table data and write to appropriately pre-defined file.
         with FileManager(OUTPUT_CUSTOMER_TABLE_FILE, WRITE_ONLY_MODE) as customer_table_file:
             # Write header first to file
@@ -129,6 +129,8 @@ def main():
                     customer_table_file.write(f"{customer_id},\"{first_name}\",{CUSTOMER_ACTIVE_FLAG}\n")
                 else:
                     customer_table_file.write(f"{customer_id},\"{first_name}\",{CUSTOMER_INACTIVE_FLAG}\n")
+        # Notify user filepath of generated customer table upon table generation completion
+        print(f"\nCustomer data table has been written to '{OUTPUT_CUSTOMER_TABLE_FILE}'.")
         # Generate purchases table data and write to appropriately pre-defined file.
         with FileManager(OUTPUT_PURCHASES_TABLE_FILE, WRITE_ONLY_MODE) as purchases_table_file:
             # Write header first to file
@@ -148,6 +150,8 @@ def main():
                 purchases_table_file.write(f"{epoch_time_purchased},{customer_id},"\
                                            f"\"{ean13_barcode}\",{quantity_purchased}\n")
                 epoch_time_purchased += fake_data_gen.pyint(min_value=MIN_NS_GAP, max_value=MAX_NS_GAP)
+        # Notify user filepath of generated purchases table upon table generation completion
+        print(f"\nPurchases data table has been written to '{OUTPUT_PURCHASES_TABLE_FILE}'.\n")
 
     else:
 
