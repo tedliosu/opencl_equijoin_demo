@@ -101,7 +101,7 @@ void load_tables_hash_equijoin_probe(cl_context *context, cl_command_queue* queu
                                                           NULL, &(write_events[results_table_write_index]));
 
     // Wait for all write commands to finish executing
-    clWaitForEvents(num_of_write_events, write_events);
+    func_error_code = clWaitForEvents(num_of_write_events, write_events);
     // Writing to OpenCL device memory finished; free memory storing list of write command events.
     free(write_events);
 
@@ -134,9 +134,10 @@ void opencl_hash_equijoin_probe(cl_command_queue *queue, cl_program *program,
 
     // The last event to be performed in the command queue on the OpenCL device
     cl_event event;
+    cl_int func_error_code;
 
     // Generate the kernel runtime from the compiled OpenCL program.
-    *kernel = clCreateKernel(*program, KERNEL_FUNC_NAME, NULL);
+    *kernel = clCreateKernel(*program, KERNEL_FUNC_NAME, &func_error_code);
 
     /* 
      * Specify size of each thread block and size of result output table
@@ -149,25 +150,25 @@ void opencl_hash_equijoin_probe(cl_command_queue *queue, cl_program *program,
     printf(NOTIFY_USER_HASH_JOIN_OP, NUM_THREADS_IN_BLOCK);
 
     // Set arguments for equijoin kernel
-    clSetKernelArg(*kernel, 0, sizeof(*(cl_operands.hashed_customer_table_buffer)),
-                                        (void*)cl_operands.hashed_customer_table_buffer);
-    clSetKernelArg(*kernel, 1, sizeof(*(cl_operands.purchases_table_buffer)),
-                                        (void*)cl_operands.purchases_table_buffer);
-    clSetKernelArg(*kernel, 2, sizeof(*(cl_operands.joined_results_table_buffer)),
-                                        (void*)cl_operands.joined_results_table_buffer);
-    clSetKernelArg(*kernel, 3, sizeof(is_customer_active), (void*)&is_customer_active);
+    func_error_code = clSetKernelArg(*kernel, 0, sizeof(*(cl_operands.hashed_customer_table_buffer)),
+                                                       (void*)cl_operands.hashed_customer_table_buffer);
+    func_error_code = clSetKernelArg(*kernel, 1, sizeof(*(cl_operands.purchases_table_buffer)),
+                                                        (void*)cl_operands.purchases_table_buffer);
+    func_error_code = clSetKernelArg(*kernel, 2, sizeof(*(cl_operands.joined_results_table_buffer)),
+                                                        (void*)cl_operands.joined_results_table_buffer);
+    func_error_code = clSetKernelArg(*kernel, 3, sizeof(is_customer_active), (void*)&is_customer_active);
     
     // Enqueue equijoin task to command queue to execute the equijoin.
-    clEnqueueNDRangeKernel(*queue, *kernel, OPERAND_DIMS, NULL, global, local, 0, NULL, &event);
+    func_error_code = clEnqueueNDRangeKernel(*queue, *kernel, OPERAND_DIMS, NULL, global, local, 0, NULL, &event);
 
     // Wait for table equijoining to be finished
-    clWaitForEvents(1, &event);
+    func_error_code = clWaitForEvents(1, &event);
 
     // Copy the result of the table join back to main memory
-    clEnqueueReadBuffer(*queue, *(cl_operands.joined_results_table_buffer), CL_BLOCKING,
-                                 CL_BUFFER_OFFSET, tables_list.results_table->num_records *
-                                                  sizeof(*(tables_list.results_table->table)),
-                                                  tables_list.results_table->table, 0, NULL, NULL);
+    func_error_code = clEnqueueReadBuffer(*queue, *(cl_operands.joined_results_table_buffer), CL_BLOCKING,
+                                                    CL_BUFFER_OFFSET, tables_list.results_table->num_records *
+                                                                      sizeof(*(tables_list.results_table->table)),
+                                                                    tables_list.results_table->table, 0, NULL, NULL);
     
 }
 
