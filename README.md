@@ -48,7 +48,12 @@
 
 6. You may tweak the IS_CUSTOMER_ACTIVE macro value in "./include/table_utilities.h" to be either
    "CUSTOMER_ACTIVE_FLAG" or "CUSTOMER_INACTIVE_FLAG" to see the program generate the equijoin result
-   tables for either active customers only or inactive customers only.
+   tables for either active customers only or inactive customers only.  You may also tweak the macro
+   value of NUM_THREADS_IN_BLOCK listed in "./include/equijoin_opencl.h" to be any positive non-zero integer,
+   BUT the number of rows (i.e. 2,000,000) in the example purchases table (located at "./data/example_purchases_data.csv")
+   **MUST be divisible by** the value of NUM_THREADS_IN_BLOCK (in "./include/equijoin_opencl.h") **if
+   the value of EXAMPLE_OR_CUSTOM_FILES is "1"** in "./include/table_utilities.h"; **otherwise
+   the main C program WILL SEGFAULT**.
 
 7. You may also adjust the DESIRED_PLATFORM_INDEX macro value in "./include/equijoin_gpu-vs-cpu.h" for
    running parallelized hash equijoin probing in OpenCL on different OpenCL platforms on your machine.
@@ -65,6 +70,9 @@
 2. `./generate_custom_data.py [number of customer table rows] [number of purchases table rows]`
    (MAKE SURE you have the Faker pip package installed for this one)
     - For example, run `./generate_custom_data.py 1000000 3000000`
+    - Also, tweak the value of NUM_THREADS_IN_BLOCK listed in "./include/equijoin_opencl.h" if
+      necessary so that the number of purchase table rows you specified in this step **is divisible
+      by** the value of NUM_THREADS_IN_BLOCK; **otherwise the main C program WILL SEGFAULT**.
 
 3. `./generate_custom_data_equijoin_result_ref.sh` (MAKE SURE you have sqlite3 installed for this one)
  

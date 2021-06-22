@@ -34,7 +34,7 @@
  * Threadblock sizes; 64 - 128 is what Intel recommends for most algorithms I believe
  * DO NOT USE THREAD BLOCKS LARGER THAN 256; it WILL BREAK the code.
  */
-#define NUM_THREADS_IN_BLOCK 256
+#define NUM_THREADS_IN_BLOCK 250
 // Amount of offset of starting location of buffer contents in device memory
 #define CL_BUFFER_OFFSET 0
 /*
