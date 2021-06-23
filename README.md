@@ -87,7 +87,7 @@
 
 ### On Machine With A Ryzen 5 2600 and A RX Vega 56 ###
 
-##### With Example Customer Table of 1.5 Millon Records and Example Purchases Table of 2 Million Records ######
+1. ##### With Example Customer Table of 1.5 Millon Records and Example Purchases Table of 2 Million Records ######
 
 <pre>
 Currently reading table in './data/example_customer_data.csv' from disk into memory...
@@ -116,13 +116,13 @@ Congratulations, both of your tables are identical in content!
 
 </pre>
 
-##### With Custom Customer Table of 20 Millon Records and Custom Purchases Table of 60 Million Records ######
+2. ##### With Custom Customer Table of 20 Millon Records and Custom Purchases Table of 60 Million Records ######
 
- - **Note:** it took **about an hour total** (on my machine at least) to generate the tables needed for
-   running the main C program with tens of millions of records per table.  So be prepared for steps 2 and
-   3 to take a while if you want to follow the instructions under "**Instructions To Run Main C Program Using Custom Input Data Tables**"
-   with a very large number of customer table rows and purchases tables rows specified (e.g. doing step 2
-   as `./generate_custom_data.py 20000000 60000000` and then doing step 3).
+    - **Note:** it took **about an hour total** (on my machine at least) to generate the tables needed for
+      running the main C program with tens of millions of records per table.  So be prepared for steps 2 and
+      3 to take a while if you want to follow the instructions under "**Instructions To Run Main C Program Using Custom Input Data Tables**"
+      with a very large number of customer table rows and purchases tables rows specified (e.g. doing step 2
+      as `./generate_custom_data.py 20000000 60000000` and then doing step 3).
 
 <pre>
 Currently reading table in './data/custom_customer_data.csv' from disk into memory...
