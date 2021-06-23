@@ -81,6 +81,76 @@
 5. If desired, change macro value of IS_CUSTOMER_ACTIVE (valid values are either "CUSTOMER_ACTIVE_FLAG"
    or "CUSTOMER_INACTIVE_FLAG"), run `make all`, and then run recompiled executable again.
 
+# Performance Metrics
+
+## Main C Program Output With The Program Running OpenCL Using GPU ##
+
+### On Machine With A Ryzen 5 2600 and A RX Vega 56 ###
+
+##### With Example Customer Table of 1.5 Millon Records and Example Purchases Table of 2 Million Records ######
+
+<pre>
+Currently reading table in './data/example_customer_data.csv' from disk into memory...
+
+Currently reading table in './data/example_purchases_data.csv' from disk into memory...
+
+>>> OpenCL program compiler result message: - 
+
+>>> Performing parallelized hash equijoin probing on OpenCL device with 250 work-items per workgroup
+Parallelized hash equijoin probing of hashed customer table with 1500000 row(s) and purchases table with 2000000 row(s) on OpenCL device took 0.118785 seconds
+
+Currently writing results table to './data/example_results/parallel_example_join_result_active_customers.csv' on disk...
+
+>>> Performing serial hash equijoin probing in main memory
+Serial hash equijoin probing of hashed customer table with 1500000 row(s) and purchases table with 2000000 row(s) in main memory took 0.185644 seconds
+
+Currently writing results table to './data/example_results/serial_example_join_result_active_customers.csv' on disk...
+
+>>> Table stored at './data/example_results/parallel_example_join_result_active_customers.csv' currently being verified
+    using table stored at './data/example_results/example_correct_join_result_active_customers.csv'.
+Congratulations, both of your tables are identical in content!
+
+>>> Table stored at './data/example_results/serial_example_join_result_active_customers.csv' currently being verified
+    using table stored at './data/example_results/example_correct_join_result_active_customers.csv'.
+Congratulations, both of your tables are identical in content!
+
+</pre>
+
+##### With Custom Customer Table of 20 Millon Records and Custom Purchases Table of 60 Million Records ######
+
+ - **Note:** it took **about an hour total** (on my machine at least) to generate the tables needed for
+   running the main C program with tens of millions of records per table.  So be prepared for steps 2 and
+   3 to take a while if you want to follow the instructions under "**Instructions To Run Main C Program Using Custom Input Data Tables**"
+   with a very large number of customer table rows and purchases tables rows specified (e.g. doing step 2
+   as `./generate_custom_data.py 20000000 60000000` and then doing step 3).
+
+<pre>
+Currently reading table in './data/custom_customer_data.csv' from disk into memory...
+
+Currently reading table in './data/custom_purchases_data.csv' from disk into memory...
+
+>>> OpenCL program compiler result message: - 
+
+>>> Performing parallelized hash equijoin probing on OpenCL device with 250 work-items per workgroup
+Parallelized hash equijoin probing of hashed customer table with 20000000 row(s) and purchases table with 60000000 row(s) on OpenCL device took 2.770294 seconds
+
+Currently writing results table to './data/custom_results/parallel_custom_join_result_active_customers.csv' on disk...
+
+>>> Performing serial hash equijoin probing in main memory
+Serial hash equijoin probing of hashed customer table with 20000000 row(s) and purchases table with 60000000 row(s) in main memory took 6.713951 seconds
+
+Currently writing results table to './data/custom_results/serial_custom_join_result_active_customers.csv' on disk...
+
+>>> Table stored at './data/custom_results/parallel_custom_join_result_active_customers.csv' currently being verified
+    using table stored at './data/custom_results/custom_correct_join_result_active_customers.csv'.
+Congratulations, both of your tables are identical in content!
+
+>>> Table stored at './data/custom_results/serial_custom_join_result_active_customers.csv' currently being verified
+    using table stored at './data/custom_results/custom_correct_join_result_active_customers.csv'.
+Congratulations, both of your tables are identical in content!
+
+</pre>
+
 # TODOs
 
  - Unit testing of both versions of hash equijoin in main C program with edge cases (e.g. only 1 record each
