@@ -24,7 +24,7 @@
  *    Language, AMD Accelerated Parallel Processing) in
  *    list of platforms returned.
  */
-#define DESIRED_PLATFORM_INDEX 1
+#define DESIRED_PLATFORM_INDEX 0
 // Number of OpenCL devices per OpenCL platform
 #define NUM_CL_DEVICES 1
 // Number of OpenCL programs to be loaded
