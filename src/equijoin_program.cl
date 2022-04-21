@@ -81,11 +81,13 @@ __kernel void naive_hash_equijoin_probe(__global struct Hashed_Customer_Table_Ro
           /*
            * Copy string fields over character by character as there is no
            * "strcpy"-like function in OpenCL.
-           */ 
+           */
+          #pragma unroll
           for (unsigned int char_index = 0; char_index < FIRST_NAME_MAX_LEN; ++char_index) {
                 results_table[result_table_row].first_name_customer[char_index] =
                             hashed_customer_table[hashed_customer_table_row].first_name[char_index];
           }
+          #pragma unroll
           for (unsigned int char_index = 0; char_index < EAN13_MAX_CHARS; ++char_index) {
                 results_table[result_table_row].ean13[char_index] =
                             purchases_table[result_table_row].ean13[char_index];
